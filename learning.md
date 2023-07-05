@@ -20,5 +20,10 @@ The component folder are files you are going to use within the project
 
 What is common.types.js means
 
-stopped at 14:14
+
+### Importing in Typescript
+
+`@/components/TheComponet` will work
+
+20;00
 
