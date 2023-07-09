@@ -35,4 +35,8 @@ E.g The menu items
 
 Anytime you are working with map, the return must a prop called key
 
-30
+### How to use grafbase
+
+- Installing grafbase using tailwind is done by
+  grafbase init --config-format typescript
+  3
