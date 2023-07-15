@@ -22,5 +22,4 @@ const project = g.model('Project', {
 
 export default config({
   schema: g
-
 })

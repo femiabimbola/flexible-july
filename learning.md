@@ -43,7 +43,6 @@ Anytime you are working with map, the return must a prop called key
 ### Using Hooks
 
 You cannot render hooks on the server. It is indiviual choice
-49 - 282
 
 ### Git Problem
 
@@ -57,3 +56,16 @@ We shouldn’t do this if someone has rebased on the remote. The history is diff
 - Switch to cmd by `cmd`
   The change to folder .git by `.git`
   Then do `tree .` to list all the files
+
+### How I got my git to work
+
+I removed the git in the folder first
+`rm -rf .git`
+
+The I initialize the git again and did git push
+git -init
+
+Then I did force push
+`git push -f origin develop`
+
+### Read NextAuth JS
