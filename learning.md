@@ -69,3 +69,5 @@ Then I did force push
 `git push -f origin develop`
 
 ### Read NextAuth JS
+
+stopped at 1:05

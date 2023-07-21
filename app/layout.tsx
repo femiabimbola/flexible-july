@@ -7,9 +7,7 @@ export const metadata = {
   description: 'Discover remarkable developer projects',
 }
 
-export default function RootLayout({
-children,
-}: {
+export default function RootLayout({children,}: {
   children: React.ReactNode
 }) {
   return (
@@ -17,7 +15,7 @@ children,
       <body>
         <Navbar/>
         <main>
-        {children}
+          {children}
         </main>
         <Footer />
       </body>

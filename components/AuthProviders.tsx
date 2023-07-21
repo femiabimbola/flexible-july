@@ -10,28 +10,28 @@ type Provider = {
   type: string;
   signinUrl: string;
   callbackUrl: string;
-  signinUrlParams?: Record<string, string> | null; 
+  signinUrlParams?: Record<string, string> | null;
   // Having ? means it is optional
 }
 
 type Providers = Record<string, Provider>;
 
 const AuthProviders = () => {
-const [providers, setProviders] = useState<Providers | null >(null)
+  const [providers, setProviders] = useState<Providers | null>(null)
 
-useEffect(() => {
-  const fetchProviders = async () => {
-    const res = await getProviders();
-    console.log(res);
-    setProviders(res);
-  }
- fetchProviders();
-}, [])
+  useEffect(() => {
+    const fetchProviders = async () => {
+      const res = await getProviders();
+      console.log(res);
+      setProviders(res);
+    }
+    fetchProviders();
+  }, [])
 
-  if(providers) {
-    return(
+  if (providers) {
+    return (
       <div>
-        {Object.values(providers).map((provider: Provider, i) => (<button key={i}>{provider.id}</button>))}
+        {Object.values(providers).map((provider: Provider, i) => (<button onClick={() => signIn(provider?.id)} key={i}>{provider.id}</button>))}
       </div>
     )
   }
