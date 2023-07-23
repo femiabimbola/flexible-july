@@ -73,4 +73,6 @@ Then I did force push
 
 First install `npm install grafbase`
 
+Then get the graphql of what you set in the model
+
 - npx grafbase@0.24 dev
