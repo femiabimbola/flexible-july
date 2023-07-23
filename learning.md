@@ -39,6 +39,7 @@ Anytime you are working with map, the return must a prop called key
 
 - Installing grafbase using tailwind is done by
   grafbase init --config-format typescript
+  How did you get the graphbase key or so
 
 ### Using Hooks
 
@@ -68,6 +69,8 @@ git -init
 Then I did force push
 `git push -f origin develop`
 
-### Read NextAuth JS
+### To spinoff a graphbase environment
 
-stopped at 1:05
+First install `npm install grafbase`
+
+- npx grafbase@0.24 dev
