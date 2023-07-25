@@ -9,7 +9,7 @@ import jsonwebtoken from 'jsonwebtoken';
 import { JWT } from 'next-auth/jwt';
 import { createUser, getUser } from './actions';
 
-//   This is ab object
+//   This is nextautoh object
 export const authOptions: NextAuthOptions = {
   providers: [
     // The ! beside the google is saying it could be undefined
@@ -17,14 +17,26 @@ export const authOptions: NextAuthOptions = {
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!
     })],
-  // jwt:{ 
-  //   encode:({secret, token}) => { },
-  //   decode: async ({secret, token}) => { }
-  // },
+
+  jwt: {
+    encode: ({ secret, token }) => {
+      const encodedToken = jsonwebtoken.sign({
+        ...token, iss: 'grafbase', exp: Math.floor(Date.now() / 1000) + 60 * 60
+      }, secret)
+      return encodedToken
+    },
+    decode: async ({ secret, token }) => {
+      const decodedToken = jsonwebtoken.verify(token!, secret) as JWT
+      return decodedToken;
+    }
+  },
+
   // theme:{
   //   colorScheme: 'light',
   //   logo:'/logo.png'
   // },
+
+
   callbacks: {
     // The session should populate both the google details and other info
     async session({ session }) {
@@ -55,6 +67,7 @@ export const authOptions: NextAuthOptions = {
   }
 }
 
+// It populate with details from google auth
 export async function getCurrentUser() {
   const session = await getServerSession(authOptions) as SessionInterface;
   // Treat the getServerSession as a type of sessioninterface
