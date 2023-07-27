@@ -16,7 +16,7 @@ const makeGraphQLRequest = async (query: string, variables = {}) => {
   try {
     return await client.request(query, variables)
   } catch (error) {
-    throw error
+    throw error;
   }
 }
 
@@ -28,7 +28,8 @@ export const getUser = (email: string) => {
 export const createUser = (name: string, email: string, avatarUrl: string) => {
   client.setHeader('x-api-key', apiKey);
   const variables = {
-    input: { name, email, avatarUrl }
-  }
-  return makeGraphQLRequest(createUserMutation, { variables })
+    input: { name: name, email: email, avatarUrl: avatarUrl },
+  };
+  // You made the mistake of using { variables}
+  return makeGraphQLRequest(createUserMutation, variables);
 }
