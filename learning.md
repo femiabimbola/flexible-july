@@ -76,3 +76,9 @@ First install `npm install grafbase`
 Then get the graphql of what you set in the model
 
 - npx grafbase@0.24 dev
+
+### How to use a Modal
+
+This project has how to use a modal
+
+> Check the modal component & Profile Menu

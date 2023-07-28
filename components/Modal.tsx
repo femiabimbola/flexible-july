@@ -11,10 +11,14 @@ const Modal = ({ children }: { children: ReactNode }) => {
   const wrapper = useRef<HTMLDivElement>(null);
   const router = useRouter()
 
-  const handleClick = () => { }
-  const onDismiss = () => router.push('/')
+  const onDismiss = useCallback(() => router.push('/'), [router]);
+
+  const handleClick = useCallback((e: React.MouseEvent) => {
+    if ((e.target === overlay.current) && onDismiss) onDismiss()
+  }, [overlay, onDismiss])
 
   return (
+    //  Handleclick works when we click outside
     <div ref={overlay} className="modal" onClick={handleClick}>
       <button type='button' onClick={onDismiss} className="absolute top-4 right-8">
         <Image src="/close.svg" height={17} width={17} alt='close' />
