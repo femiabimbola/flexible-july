@@ -1,34 +1,53 @@
 'use client'
 
 import { SessionInterface } from "@/common.types"
-import { ChangeEvent } from "react"
+import { ChangeEvent, useState } from "react"
 import Image from "next/image"
 import FormField from "./FormField"
 import CustomMenu from "./CustomMenu"
 import { categoryFilters } from "@/constant"
+import Button from "./Button"
 
 type Props = {
   type: string,
   session: SessionInterface
 }
 
-const handleFormSubmit = (e: React.FormEvent) => { }
-
-const handleChangeImage = (e: ChangeEvent<HTMLInputElement>) => { };
-
-const handleStateChange = (fieldName: string, value: string) => { };
-
-const form = {
-  title: '',
-  image: '',
-  category: '',
-  description: '',
-  liveSiteUrl: '',
-  githubUrl: ''
-}
 
 // const image = null
 const ProjectForm = ({ type, session }: Props) => {
+
+  const handleFormSubmit = (e: React.FormEvent) => { }
+
+  const handleChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
+    // This prevent the reloading of the page
+    e.preventDefault()
+    const file = e.target.files?.[0]
+    if (!file) return;
+    if (!file.type.includes('image')) return alert('Upload a valid image file')
+    const reader = new FileReader()
+    reader.readAsDataURL(file)
+    reader.onload = () => {
+      const result = reader.result as string;
+      handleStateChange('image', result)
+    }
+  };
+
+  const handleStateChange = (fieldName: string, value: string) => {
+    setform((prevState) => ({ ...prevState, [fieldName]: value }))
+  };
+
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
+  const [form, setform] = useState({
+    title: '',
+    image: '',
+    category: '',
+    description: '',
+    liveSiteUrl: '',
+    githubUrl: ''
+  })
+
   return (
     <form onSubmit={handleFormSubmit} className="flexStart form">
       <div className="flexStart form_image-container">
@@ -60,7 +79,10 @@ const ProjectForm = ({ type, session }: Props) => {
       />
 
       <div className="flexStart w-full">
-        <button> Create a project post</button>
+        <Button title="create" type="submit"
+          leftIcon={isSubmitting ? '' : '/plus.svg'}
+          isSubmitting={isSubmitting}
+        />
       </div>
     </form>
   )
