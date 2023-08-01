@@ -17,7 +17,20 @@ type Props = {
 // const image = null
 const ProjectForm = ({ type, session }: Props) => {
 
-  const handleFormSubmit = (e: React.FormEvent) => { }
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
+  const handleFormSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    try {
+      if (type === 'create') {
+        // Call create project actionw
+      }
+    } catch {
+
+    }
+  }
+
 
   const handleChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
     // This prevent the reloading of the page
@@ -37,7 +50,6 @@ const ProjectForm = ({ type, session }: Props) => {
     setform((prevState) => ({ ...prevState, [fieldName]: value }))
   };
 
-  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const [form, setform] = useState({
     title: '',
@@ -79,7 +91,12 @@ const ProjectForm = ({ type, session }: Props) => {
       />
 
       <div className="flexStart w-full">
-        <Button title="create" type="submit"
+        <Button title={
+          isSubmitting
+            ? `${(type === 'create') ? 'creating' : 'Editing'}`
+            : `${type === 'create' ? 'create' : 'edit'}`
+        }
+          type="submit"
           leftIcon={isSubmitting ? '' : '/plus.svg'}
           isSubmitting={isSubmitting}
         />
