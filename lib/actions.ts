@@ -21,11 +21,14 @@ const makeGraphQLRequest = async (query: string, variables = {}) => {
   }
 }
 
+// Calling graphql database
 export const getUser = (email: string) => {
   client.setHeader('x-api-key', apiKey);
   return makeGraphQLRequest(getUserQuery, { email })
 }
 
+
+// calling graphql database
 export const createUser = (name: string, email: string, avatarUrl: string) => {
   client.setHeader('x-api-key', apiKey);
   const variables = {
@@ -35,15 +38,24 @@ export const createUser = (name: string, email: string, avatarUrl: string) => {
   return makeGraphQLRequest(createUserMutation, variables);
 }
 
+
+//  Calling cloudinary database
+// What is the difference between throw and return
 export const uploadImage = async (imagePath: string) => {
   try {
-    const response = await fetch(`${serverUrl}/api/upload`, {})
-    return response;
+    const response = await fetch(`${serverUrl}/api/upload`, {
+      method: 'POST',
+      body: JSON.stringify({ path: imagePath })
+    })
+    return response.json()
   } catch (error) {
-
+    return error;
   }
 }
 
 export const createNewProject = async (form: ProjectForm, creatorId: string, token: string) => {
-  const imageUrl = await uploadImage(form.image)
+  const imageUrl = await uploadImage(form.image);
+  if (imageUrl.url) {
+    // return makeGraphQLRequest()
+  }
 }
