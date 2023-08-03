@@ -4,10 +4,15 @@ import { NextResponse } from "next/server";
 import { v2 as cloudinary } from 'cloudinary';
 
 cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_NAME,
-  api_key: process.env.CLOUDINARY_KEY,
-  api_secret: process.env.CLOUDINARY_NAME
+  // cloud_name: process.env.CLOUDINARY_NAME,
+  // api_key: process.env.CLOUDINARY_KEY,
+  // api_secret: process.env.CLOUDINARY_NAME
 })
+
+export async function GET() {
+  return NextResponse.json({ message: 'hi from upload' }, { status: 200 })
+
+}
 
 // { path } is one of the options while making
 export async function POST(request: Request) {
@@ -25,6 +30,7 @@ export async function POST(request: Request) {
       transformation: [{ width: 1000, height: 752, crop: 'scale' }]
     }
     const result = await cloudinary.uploader.upload(path, options)
+    console.log(result)
     return NextResponse.json(result, { status: 200 })
   }
   catch (error) {

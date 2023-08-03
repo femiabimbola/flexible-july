@@ -8,7 +8,7 @@ import CustomMenu from "./CustomMenu"
 import { categoryFilters } from "@/constant"
 import Button from "./Button"
 import { createNewProject, fetchToken } from "@/lib/actions"
-import { useRouter } from "next/router"
+import { useRouter } from "next/navigation"
 
 type Props = {
   type: string,
@@ -19,6 +19,7 @@ type Props = {
 // const image = null
 const ProjectForm = ({ type, session }: Props) => {
 
+  // To direct user to a particular post
   const router = useRouter();
 
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -34,8 +35,10 @@ const ProjectForm = ({ type, session }: Props) => {
         await createNewProject(form, session?.user.id, token)
         router.push('/')
       }
-    } catch {
-
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
