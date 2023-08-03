@@ -7,6 +7,8 @@ import FormField from "./FormField"
 import CustomMenu from "./CustomMenu"
 import { categoryFilters } from "@/constant"
 import Button from "./Button"
+import { createNewProject, fetchToken } from "@/lib/actions"
+import { useRouter } from "next/router"
 
 type Props = {
   type: string,
@@ -17,14 +19,20 @@ type Props = {
 // const image = null
 const ProjectForm = ({ type, session }: Props) => {
 
+  const router = useRouter();
+
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+
+    const { token } = await fetchToken()
+
     try {
       if (type === 'create') {
-        // Call create project actionw
+        await createNewProject(form, session?.user.id, token)
+        router.push('/')
       }
     } catch {
 
@@ -34,7 +42,9 @@ const ProjectForm = ({ type, session }: Props) => {
 
   const handleChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
     // This prevent the reloading of the page
+
     e.preventDefault()
+
     const file = e.target.files?.[0]
     if (!file) return;
     if (!file.type.includes('image')) return alert('Upload a valid image file')
