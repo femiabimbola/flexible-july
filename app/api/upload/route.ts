@@ -3,11 +3,18 @@
 import { NextResponse } from "next/server";
 import { v2 as cloudinary } from 'cloudinary';
 
+// cloudinary.config({
+//   // cloud_name: process.env.CLOUDINARY_NAME,
+//   // api_key: process.env.CLOUDINARY_KEY,
+//   // api_secret: process.env.CLOUDINARY_NAME
+// })
+
+
 cloudinary.config({
-  // cloud_name: process.env.CLOUDINARY_NAME,
-  // api_key: process.env.CLOUDINARY_KEY,
-  // api_secret: process.env.CLOUDINARY_NAME
-})
+  cloud_name: 'dvdxoiol4',
+  api_key: '158253478548619',
+  api_secret: 'eGXwHH2NBGZPhcYvxIbhTjefp2Y'
+});
 
 export async function GET() {
   return NextResponse.json({ message: 'hi from upload' }, { status: 200 })
