@@ -2,6 +2,7 @@ import { ProjectInterface } from "@/common.types";
 import ProjectCard from "@/components/ProjectCard";
 import { fetchAllProjects } from "@/lib/actions";
 
+// Node is one instance of the project 
 type ProjectSearch = {
   projectSearch: {
     edges: { node: ProjectInterface }[];
