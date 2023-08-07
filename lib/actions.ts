@@ -1,5 +1,5 @@
 import { ProjectForm } from "@/common.types";
-import { createProjectMutation, createUserMutation, getProjectByIdQuery, getUserQuery, projectsQuery } from "@/graphql";
+import { createProjectMutation, createUserMutation, getProjectByIdQuery, getProjectsOfUserQuery, getUserQuery, projectsQuery } from "@/graphql";
 import { GraphQLClient } from "graphql-request";
 
 const isProduction = process.env.NODE_ENV === 'production';
@@ -84,4 +84,12 @@ export const fetchAllProjects = async (category?: string, endcursor?: string) =>
 export const getProjectDetails = (id: string) => {
   client.setHeader('x-api-key', apiKey);
   return makeGraphQLRequest(getProjectByIdQuery, { id })
+}
+
+
+// anything using setHeader is using a session
+
+export const getUserProjects = (id: string, last?: number) => {
+  client.setHeader('x-api-key', apiKey);
+  return makeGraphQLRequest(getProjectsOfUserQuery, { id, last })
 }
