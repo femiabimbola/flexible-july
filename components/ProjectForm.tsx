@@ -1,6 +1,6 @@
 'use client'
 
-import { SessionInterface } from "@/common.types"
+import { ProjectInterface, SessionInterface } from "@/common.types"
 import { ChangeEvent, useState } from "react"
 import Image from "next/image"
 import FormField from "./FormField"
@@ -12,12 +12,13 @@ import { useRouter } from "next/navigation"
 
 type Props = {
   type: string,
-  session: SessionInterface
+  session: SessionInterface;
+  project?: ProjectInterface
 }
 
 
 // const image = null
-const ProjectForm = ({ type, session }: Props) => {
+const ProjectForm = ({ type, session, project }: Props) => {
 
   // To direct user to a particular post
   const router = useRouter();
@@ -34,6 +35,9 @@ const ProjectForm = ({ type, session }: Props) => {
       if (type === 'create') {
         await createNewProject(form, session?.user.id, token)
         router.push('/')
+      }
+      if (type === 'edit') {
+
       }
     } catch (error) {
       console.log(error)
@@ -65,12 +69,12 @@ const ProjectForm = ({ type, session }: Props) => {
 
 
   const [form, setform] = useState({
-    title: '',
-    image: '',
-    category: '',
-    description: '',
-    liveSiteUrl: '',
-    githubUrl: ''
+    title: project?.title || '',
+    image: project?.image || '',
+    category: project?.category || '',
+    description: project?.description || '',
+    liveSiteUrl: project?.liveSiteUrl || '',
+    githubUrl: project?.category || ''
   })
 
   return (

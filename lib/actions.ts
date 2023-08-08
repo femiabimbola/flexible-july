@@ -97,3 +97,8 @@ export const deleteProject = (id: string, token: string) => {
   client.setHeader("Authorization", `Bearer ${token}`)
   return makeGraphQLRequest(deleteProjectMutation, { id })
 }
+
+export const updateProject = (form: ProjectForm, projectId: string, token: string) => {
+  client.setHeader("Authorization", `Bearer ${token}`)
+  return makeGraphQLRequest(deleteProjectMutation, { form, })
+}
