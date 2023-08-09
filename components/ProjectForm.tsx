@@ -1,13 +1,13 @@
 'use client'
 
-import { ProjectInterface, SessionInterface } from "@/common.types"
+import { FormState, ProjectInterface, SessionInterface } from "@/common.types"
 import { ChangeEvent, useState } from "react"
 import Image from "next/image"
 import FormField from "./FormField"
 import CustomMenu from "./CustomMenu"
 import { categoryFilters } from "@/constant"
 import Button from "./Button"
-import { createNewProject, fetchToken } from "@/lib/actions"
+import { createNewProject, fetchToken, updateProject } from "@/lib/actions"
 import { useRouter } from "next/navigation"
 
 type Props = {
@@ -15,7 +15,6 @@ type Props = {
   session: SessionInterface;
   project?: ProjectInterface
 }
-
 
 // const image = null
 const ProjectForm = ({ type, session, project }: Props) => {
@@ -32,12 +31,15 @@ const ProjectForm = ({ type, session, project }: Props) => {
     const { token } = await fetchToken()
 
     try {
+      // This works for creating new project
       if (type === 'create') {
         await createNewProject(form, session?.user.id, token)
         router.push('/')
       }
+      // This works for editing project
       if (type === 'edit') {
-
+        await updateProject(form, project?.id as string, token)
+        router.push('/')
       }
     } catch (error) {
       console.log(error)
@@ -48,8 +50,8 @@ const ProjectForm = ({ type, session, project }: Props) => {
 
 
   const handleChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
-    // This prevent the reloading of the page
 
+    // This prevent the reloading of the page
     e.preventDefault()
 
     const file = e.target.files?.[0]
@@ -63,7 +65,9 @@ const ProjectForm = ({ type, session, project }: Props) => {
     }
   };
 
-  const handleStateChange = (fieldName: string, value: string) => {
+  // const handleStateChange = (fieldName: string, value: string) => {
+
+  const handleStateChange = (fieldName: keyof FormState, value: string) => {
     setform((prevState) => ({ ...prevState, [fieldName]: value }))
   };
 
