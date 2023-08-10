@@ -15,9 +15,18 @@ type ProjectSearch = {
   }
 }
 
-const Home = async () => {
+//  Important type script
+type searchParams = {
+  category?: string | null
+}
 
-  //  The as ensure the result comes out that way
+type Props = {
+  searchParams: searchParams
+}
+
+const Home = async ({ searchParams: { category } }: Props) => {
+
+  //  The as ensure the result comes out that way of projectSearch
   const data = await fetchAllProjects() as ProjectSearch;
 
   const projectsToDisplay = data?.projectSearch?.edges || [];
@@ -35,7 +44,6 @@ const Home = async () => {
   return (
     <section className="flex-start flex-col paddings mb-16">
       <Categories />
-
 
       <section className="projects-grid">
         {projectsToDisplay.map(({ node }: { node: ProjectInterface }) => (

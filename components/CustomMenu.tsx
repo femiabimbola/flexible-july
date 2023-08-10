@@ -1,3 +1,5 @@
+"use client"
+
 import { Menu } from "@headlessui/react";
 import Image from "next/image";
 
@@ -8,7 +10,7 @@ type Props = {
   setState: (value: string) => void;
 }
 
-const CustomMenu = ({ title, state, filters }: Props) => {
+const CustomMenu = ({ title, state, filters, setState }: Props) => {
   return (
     <div className="flexStart flex-col w-full gap-7 relative">
       <label htmlFor={title} className="w-full text-gray-100">
@@ -25,9 +27,9 @@ const CustomMenu = ({ title, state, filters }: Props) => {
         </div>
         <Menu.Items className={"flexStart custom_menu-items"}>
           {filters.map((tag) => (
-            <Menu.Item key={(tag)}>
-              <button type='button' className="custom_menu-item 
-                onClick={(e) => setState(e.currentTarget.value)}"
+            <Menu.Item key={tag}>
+              <button type='button' className="custom_menu-item" value={tag}
+                onClick={(e) => setState(e.currentTarget.value)}
               >
                 {tag}
               </button>
