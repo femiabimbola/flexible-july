@@ -11,14 +11,28 @@ type Props = {
 	hasNextPage?: boolean;
 }
 
-const handleNavigation = (direction: string) => {
 
-}
 
 const LoadMore = ({ startCursor, endCursor, hasPreviousPage, hasNextPage }: Props) => {
 
 	const router = useRouter()
 
+	const handleNavigation = (direction: string) => {
+		const currentParams = new URLSearchParams(window.location.search)
+
+		if (direction === 'next' && hasNextPage) {
+			currentParams.delete("startcursor")
+			currentParams.set("endCursor", endCursor)
+		} else if (direction === 'first' && hasPreviousPage) {
+			currentParams.delete("endcursor")
+			currentParams.set("startcursor", endCursor)
+		}
+
+		const newSearchParams = currentParams.toString()
+		const newPathname = `${window.location.pathname}?${newSearchParams}`
+
+		router.push(newPathname)
+	}
 	return (
 		<div className="w-full flexCenter gap-5 mt-10">
 			{hasPreviousPage && (

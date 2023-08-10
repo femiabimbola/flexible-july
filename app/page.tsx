@@ -20,16 +20,25 @@ type ProjectSearch = {
 //  Important type script
 type SearchParams = {
   category?: string
+  endCursor: string
 }
 
 type Props = {
-  searchParams: SearchParams
+  searchParams: SearchParams;
+
 }
 
-const Home = async ({ searchParams: { category } }: Props) => {
+// To handle navigation in a dynamic way
+// Read more in the nextjs docs
+
+export const dynamic = 'force-dynamic';
+export const dynamicParams = true;
+export const revalidate = 0;
+
+const Home = async ({ searchParams: { category, endCursor } }: Props) => {
 
   //  The as ensure the result comes out that way of projectSearch
-  const data = await fetchAllProjects(category) as ProjectSearch;
+  const data = await fetchAllProjects(category, endCursor) as ProjectSearch;
 
   const projectsToDisplay = data?.projectSearch?.edges || [];
 
