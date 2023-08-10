@@ -1,5 +1,6 @@
 import { ProjectInterface } from "@/common.types";
 import Categories from "@/components/Categories";
+import LoadMore from "@/components/LoadMore";
 import ProjectCard from "@/components/ProjectCard";
 import { fetchAllProjects } from "@/lib/actions";
 
@@ -8,38 +9,42 @@ type ProjectSearch = {
   projectSearch: {
     edges: { node: ProjectInterface }[];
     pageInfo: {
-      hasPreciousPage: boolean;
+      hasPreviousPage: boolean;
       hasNextPage: boolean;
       startCursor: string;
+      endCursor: string;
     }
   }
 }
 
 //  Important type script
-type searchParams = {
-  category?: string | null
+type SearchParams = {
+  category?: string
 }
 
 type Props = {
-  searchParams: searchParams
+  searchParams: SearchParams
 }
 
 const Home = async ({ searchParams: { category } }: Props) => {
 
   //  The as ensure the result comes out that way of projectSearch
-  const data = await fetchAllProjects() as ProjectSearch;
+  const data = await fetchAllProjects(category) as ProjectSearch;
 
   const projectsToDisplay = data?.projectSearch?.edges || [];
 
   if (projectsToDisplay.length === 0) {
     return (
       <section className="flexStart flex-col paddings">
+        <Categories />
         <p className="no-result-text text-center">
           No project found, Create one now.
         </p>
       </section>
     )
   }
+
+  const pagination = data?.projectSearch?.pageInfo;
 
   return (
     <section className="flex-start flex-col paddings mb-16">
@@ -52,8 +57,12 @@ const Home = async ({ searchParams: { category } }: Props) => {
           />
         ))}
       </section>
-
-      <h1> Load More </h1>
+      <LoadMore
+        startCursor={pagination.startCursor}
+        endCursor={pagination.endCursor}
+        hasPreviousPage={pagination.hasPreviousPage}
+        hasNextPage={pagination.hasNextPage}
+      />
     </section>
   )
 }
