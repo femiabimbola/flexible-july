@@ -37,4 +37,4 @@ next-env.d.ts
 # environment
 /.env
 
-/grafbase/.env
+./grafbase/.env
