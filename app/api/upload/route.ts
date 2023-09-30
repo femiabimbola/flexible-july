@@ -1,6 +1,6 @@
 // Create a route, you need to choose the type of the route
 
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import { v2 as cloudinary } from 'cloudinary';
 
 // cloudinary.config({
@@ -11,14 +11,13 @@ import { v2 as cloudinary } from 'cloudinary';
 
 
 cloudinary.config({
-  cloud_name: 'dvdxoiol4',
-  api_key: '158253478548619',
-  api_secret: 'eGXwHH2NBGZPhcYvxIbhTjefp2Y'
+  cloud_name: process.env.CLOUDINARY_NAME,
+  api_key: process.env.CLOUDINARY_KEY,
+  api_secret: process.env.CLOUDINARY_SECRET
 });
 
 export async function GET() {
   return NextResponse.json({ message: 'hi from upload' }, { status: 200 })
-
 }
 
 // { path } is one of the options while making
