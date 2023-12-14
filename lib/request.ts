@@ -19,7 +19,6 @@ export const makeRequest = async (url: string, options: RequestOptions) => {
 		return response.json();
 	} catch (err) {
 		console.log(err);
-
 		return err;
 	}
 };
